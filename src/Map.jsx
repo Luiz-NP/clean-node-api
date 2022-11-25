@@ -2,6 +2,7 @@ import { View, StyleSheet, Platform, PermissionsAndroid, Dimensions } from "reac
 import MapView from "react-native-maps";
 
 const { width, height } = Dimensions.get("screen");
+import Geolocation from "@react-native-community/geolocation";
 
 export const Map = () => {
     return (
