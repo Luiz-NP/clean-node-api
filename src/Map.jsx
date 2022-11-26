@@ -2,19 +2,22 @@ import { View, StyleSheet, Platform, PermissionsAndroid, Dimensions } from "reac
 import MapView from "react-native-maps";
 
 const { width, height } = Dimensions.get("screen");
-import Geolocation from "@react-native-community/geolocation";
 
 export const Map = () => {
+  const [currentPosition, setCurrentPosition] = useState(null);
+
     return (
       <View style={styles.container}>
         <MapView
-          style={{width: width, height: height}}
-          initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+          onMapReady={() => {
+            if (Platform.OS === "android") {
+              PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION)
+                .then(() => console.log("User Accepted."))
+                .catch(err => console.log(err));
+            }
           }}
+          style={{width: width, height: height}}
+          region={currentPosition}
         />
       </View>
     );
